@@ -411,4 +411,4 @@ fi
 - **Installatie-script uitvoeren**: `vagrant provision VM`
 - **VM vernietigen**: `vagrant destroy VM`
 
-Sync test
+Sync test 2
