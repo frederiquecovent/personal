@@ -409,6 +409,4 @@ fi
 - **VM uitschakelen**: `vagrant halt VM`
 - **VM rebooten**: `vagrant reload VM`
 - **Installatie-script uitvoeren**: `vagrant provision VM`
-- **VM vernietigen**: `vagrant destroy VM` 
-
-Auto-push test
+- **VM vernietigen**: `vagrant destroy VM`
