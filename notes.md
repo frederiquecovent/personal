@@ -410,5 +410,3 @@ fi
 - **VM rebooten**: `vagrant reload VM`
 - **Installatie-script uitvoeren**: `vagrant provision VM`
 - **VM vernietigen**: `vagrant destroy VM`
-
-Testing sync of notes.md
