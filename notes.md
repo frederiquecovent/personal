@@ -171,13 +171,22 @@
 - **Configure DHCP**: `nano /etc/dhcp/dhcpd.conf`
 - **Example config file**:
 ```
+default-lease-time 10800;
+max-lease-time 86400;
+
 subnet 192.168.76.0 netmask 255.255.255.0 {
-    range 192.168.76.100 192.168.76.253;
+    range 192.168.76.101 192.168.76.253;
     option routers 192.168.76.12;
-    default-lease-time 3600;
-    max-lease-time 7200;
+}
+
+host LinuxMint22 {
+    hardware ethernet 08:00:27:e1:3b:3d;
+    fixed-address 192.168.76.150;
+    default-lease-time 86400;
 }
 ```
+
+- **Enable NAT routing**: `sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -o [NAT INTERFACE] -j MASQUERADE`
 
 #### Network monitoring & troubleshooting
 
