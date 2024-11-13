@@ -419,3 +419,44 @@ fi
 - **VM rebooten**: `vagrant reload VM`
 - **Installatie-script uitvoeren**: `vagrant provision VM`
 - **VM vernietigen**: `vagrant destroy VM`
+
+## Labo 8: Troubleshooting
+
+### TCP/IP troubleshooting
+
+#### 1. Network access layer (Fysiek)
+Verbinding tussen VM's controleren en of 'Cable Connected' aan staat in VirtualBox. (`ip link`)
+
+#### 2. Internet layer (IP)
+`ip a` of `ip -br a`
+`ip r(oute)`
+
+IP configuratie: 
+1. `cat /etc/sysconfig/network-scripts/ifcfg-[INTERFACE]`
+2. `sudo nmcli device reapply [INTERFACE]`
+3. `sudo systemctl restart NetworkManager` 
+
+DNS controleren: 
+1. `cat /etc/resolv.conf` of `resolvectl dns` 
+
+#### 3. Transport layer (Poorten)
+1. Service running? `sudo systemctl status [SERVICE]`
+2. Correct port/inteface? `sudo ss -tulpn`
+3. Firewall settings: `sudo firewall-cmd --list-all`
+
+#### 4. Application layer
+1. Logs bekijken: `journalctl -f -u httpd.service` of `tail -f /var/log/httpd/error_log`
+2. Test config syntax (bv. `apachectl configtest`)
+3. CLI tools proberen (bv. smbclient, curl, dig, netcat, etc.)
+4. Man pages bekijken
+
+### SELinux troubleshooting
+
+#### File context
+- **Is the file context as expected?** `ls -Z /var/www/html`
+- **Set file context to default value**: `sudo restorecon -R /var/www/`
+- **Set file context to specified value**: `sudo chcon -t httpd_sys_content_t test.php`
+
+#### Booleans
+- **Get boolean value**: `getsebool -a | grep http`
+- **Enable boolean**: `sudo setsebool -P httpd_can_network_connect_db on`
