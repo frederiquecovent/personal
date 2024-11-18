@@ -102,6 +102,57 @@
 - `show ip route` - Displays the routing table (to check if VLANs are reachable).
 - `ping <ip-address>` - Verifies connectivity between VLANs.
 
+## 5. STP Concepts
+
+### De 4 stappen van STP
+**1.** Bepaal de root bridge (switch met laagste Bridge ID) - `spanning-tree vlan [vlan_id] priority [priority_value]` </br> </br>
+**2.** Bepaal de root ports (poort met laagste poortkosten bv. 19 bij 100 Mbps) - `spanning-tree vlan [vlan_id] cost [value]`  </br> </br>
+**3.** Bepaal de designated ports  </br> </br>
+**4.** Bepaal de alternate (blocked) ports  </br> </br>
+
+### Troubleshooting 
+- `show spanning-tree`
+- `show spanning-tree vlan <id>`
+- `show spanning-tree interface <id>`
+- `show spanning-tree root`
+
+### PortFast and BPDU Guard
+**Enable portfast (only on access ports)**: `spanning-tree portfast` </br>
+**Enable BPDU Guard (only on access ports)**: `spanning-tree bpduguard enable`
+
+## 6. EtherChannel
+
+### 1. ON
+- ON - ON
+- `int range <range>`
+- `channel-group <id> mode on`
+- `int port-channel <id>`
+- `switchport mode trunk/access`
+
+### 2. PAgP (Port Aggregation Protocol)
+- DESIRABLE - DESIRABLE
+- DESIRABLE - AUTO
+- `int range <range>`
+- `channel-group <id> mode auto/desirable`
+- `int port-channel <id>`
+- `switchport mode trunk/access`
+
+### 3. LACP (Link aggregation Control Protocol)
+- ACTIVE - ACTIVE
+- ACTIVE - PASSIVE
+- `int range <range>`
+- `channel-group <id> mode active/passive`
+- `int port-channel <id>`
+- `switchport mode trunk/access`
+
+### 4. Troubleshooting
+- `show int port-channel`
+- `show etherchannel summary`
+- `show etherchannel port-channel`
+- `show interfaces etherchannel`
+- `show run`
+
+
 ## 14. Routing Concepts
 
 ### Letters in routing table
