@@ -115,6 +115,10 @@
 - `show spanning-tree vlan <id>`
 - `show spanning-tree interface <id>`
 - `show spanning-tree root`
+- DTP (dynamic trunking protocol) problemen:
+  - `switchport mode access`
+  - `switchport nonegotiate`
+  - `switchport mode trunk`
 
 ### PortFast and BPDU Guard
 **Enable portfast (only on access ports)**: `spanning-tree portfast` </br>
@@ -122,28 +126,23 @@
 
 ## 6. EtherChannel
 
-### 1. ON
-- ON - ON
 - `int range <range>`
-- `channel-group <id> mode on`
+- `channel-group <id> mode <mode>`
 - `int port-channel <id>`
 - `switchport mode trunk/access`
 
-### 2. PAgP (Port Aggregation Protocol)
-- DESIRABLE - DESIRABLE
-- DESIRABLE - AUTO
-- `int range <range>`
-- `channel-group <id> mode auto/desirable`
-- `int port-channel <id>`
-- `switchport mode trunk/access`
+### Modes
 
-### 3. LACP (Link aggregation Control Protocol)
-- ACTIVE - ACTIVE
-- ACTIVE - PASSIVE
-- `int range <range>`
-- `channel-group <id> mode active/passive`
-- `int port-channel <id>`
-- `switchport mode trunk/access`
+- **1. ON**:
+  - **ON-ON** 
+  - `channel-group <id> mode on`
+- **2. PAgP**:
+  - **DESIRABLE-DESIRABLE** or **DESIRABLE-AUTO**
+  - `channel-group <id> mode auto/desirable`
+- **3. LACP**:
+  - **ACTIVE-ACTIVE** or **ACTIVE-PASSIVE** 
+  - `channel-group <id> mode active/passive`
+    
 
 ### 4. Troubleshooting
 - `show int port-channel`
