@@ -604,7 +604,7 @@ DNS controleren:
 - **SSH with a custom port**: `ssh -p port_number username@hostname_or_ip`
 - **SSH with private key**: `ssh -i /path/to/private_key username@hostname_or_ip`
 - **Generate an SSH keypar**: `ssh-keygen -t rsa-sha2-512`
-- **Copy SSH key to server**: `ssh-copy-id -i [PATH_TO_KEY]user@remote_server`
+- **Copy SSH key to server**: `ssh-copy-id -i [PATH_TO_KEY] user@remote_server`
 
 #### SSH Server Configuratie
 - **/etc/ssh/sshd_config (server daemon)**:
