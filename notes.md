@@ -420,6 +420,140 @@ fi
 - **Installatie-script uitvoeren**: `vagrant provision VM`
 - **VM vernietigen**: `vagrant destroy VM`
 
+
+## Labo 7: Scripting 201 & Cron Jobs Cheat Sheet
+### Bash Functions
+
+- **Define a function**:
+```bash
+function_name() {
+    # function code
+}
+```
+
+- **Call a function**: `function_name arg1 arg2`
+
+- **Return a status**: Use `return STATUS` (not `exit`).
+
+- **Capture output (command substitution)**:
+```bash
+output=$(command arg1 arg2)
+```
+Stores `stdout` of `command` into `output`.
+
+### Variable Scope in Functions
+- **Global Scope Example**:
+```bash
+var_a=a
+foo() {
+    var_b=b
+    echo "${var_a} ${var_b}"
+}
+foo
+echo "${var_a} ${var_b}" # var_b is still accessible
+```
+
+- **Local Scope Example**:
+```bash
+var_a=a
+foo() {
+    local var_b=b
+    echo "${var_a} ${var_b}"
+}
+foo
+echo "${var_a} ${var_b}" # var_b is NOT accessible
+```
+
+### Parameter Substitution
+#### Examples:
+```bash
+var="Hello world!"
+echo "${other_var:-default}" # default
+echo "${var,,}"    # hello world! (lowercase)
+echo "${var^^}"    # HELLO WORLD! (uppercase)
+echo "${var:2:5}"  # llo w (substring)
+echo "${var//o/a}" # Hella warld! (replace)
+
+------------------------------------------------
+
+path="some/path/archive.tar.gz"
+echo "${path#*/}"   # path/archive.tar.gz
+echo "${path##*/}"  # archive.tar.gz
+echo "${path%.*}"   # some/path/archive.tar
+echo "${path%%.*}"  # some/path/archive
+
+------------------------------------------------
+
+option="${1}"
+case "${option}" in
+  -h|--help|'-?')
+    usage
+    exit 0
+    ;;
+  -v|--verbose)
+    verbose=y
+    shift
+    ;;
+  -*)
+    printf 'Unrecognized option: %s\n' "${option}"
+    usage
+    exit 1
+    ;;
+esac
+```
+
+
+### Background Processes
+
+#### Commands:
+- **Suspend a process**: `Ctrl+Z`
+- **Resume a suspended process in the background**: `bg`
+- **List background processes**: `jobs` (-l voor PID)
+- **Bring process NUM to foreground**: `fg NUM`
+- **Start a process in the background**: `command &`
+
+### One-Time Scheduling with at
+
+- **Schedule a task**:
+```bash
+at now + 2 minutes
+at> date > /tmp/date.txt
+at> <Ctrl+D>
+```
+- **Other scheduling formats**:
+- `at 3:03 AM`
+- `at midnight`
+- `at now + 3 weeks`
+
+- **Commands**:
+- List scheduled tasks: `atq`
+- Remove task NUM: `atrm NUM`
+- Voer taak uit wanneer systeem minder belast is: `batch`
+
+### Recurring Scheduling with cron
+
+- **Syntax of Crontab Entries**:
+
+`MIN HOUR DOM MON DOW CMD`
+
+- MIN: Minutes (0-59)
+- HOUR: Hours (0-23)
+- DOM: Day of the Month (1-31)
+- MON: Month (1-12)
+- DOW: Day of the Week (0-7, where 0 and 7 = Sunday)
+
+- **Examples**:
+```bash
+    5 0 * * *       /path/to/command    # Daily at 00:05
+    15 14 1 * *     /path/to/command    # Monthly on the 1st at 14:15
+    0 22 * * 1-5    echo "It's 10pm"    # Weekdays at 22:00
+```
+    
+- **Commands**:
+  - **List user-specific cron jobs**: `crontab -l`
+  - **Edit user-specific cron jobs**: `crontab -e`
+
+
 ## Labo 8: Troubleshooting & SSH
 
 ### Troubleshooting
