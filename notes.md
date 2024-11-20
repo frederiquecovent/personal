@@ -421,7 +421,7 @@ fi
 - **VM vernietigen**: `vagrant destroy VM`
 
 
-## Labo 7: Scripting 201 & Cron Jobs Cheat Sheet
+## Labo 7: Scripting 201 & Cronjobs
 ### Bash Functions
 
 - **Define a function**:
@@ -604,6 +604,7 @@ DNS controleren:
 - **SSH with a custom port**: `ssh -p port_number username@hostname_or_ip`
 - **SSH with private key**: `ssh -i /path/to/private_key username@hostname_or_ip`
 - **Generate an SSH keypar**: `ssh-keygen -t rsa-sha2-512`
+- **Copy SSH key to server**: `ssh-copy-id -i [PATH_TO_KEY]user@remote_server`
 
 #### SSH Server Configuratie
 - **/etc/ssh/sshd_config (server daemon)**:
@@ -620,7 +621,7 @@ StrictHostKeyChecking accept-new
 ```
 
 
-## Labo 9: Mount and Filesystems
+## Labo 9: Mount
 
 - **List Sata disk devices**: `ls /dev/sd*`
 
