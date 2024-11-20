@@ -618,3 +618,68 @@ UsePAM yes
 HostKeyAlgorithms=-ssh-rsa
 StrictHostKeyChecking accept-new
 ```
+
+
+## Labo 9: Mount and Filesystems
+
+- **List Sata disk devices**: `ls /dev/sd*`
+
+### Partition Management
+
+- **Display partitions of all disks**:  
+  `sudo fdisk -l`  
+
+- **Modify partitions of a specific disk**:  
+  `sudo fdisk /dev/sdc`  
+  - Interactive options include creating, deleting, or resizing partitions.
+
+### Formatting a Partition
+
+- **Format a partition with a specific filesystem**:  
+  `sudo mkfs -t [FILESYSTEM] /dev/sdXY`  
+  Examples:  
+  - `sudo mkfs -t ext4 /dev/sdb1`  
+  - `sudo mkfs -t vfat /dev/sdb2`  
+
+### Reserved Blocks
+
+- **Check reserved blocks for root**:  
+  `sudo tune2fs -l /dev/sdXY | grep -i "block count"`  
+
+- **Reduce reserved blocks to 3%**:  
+  `sudo tune2fs -m 3 /dev/sdb3 "`  
+
+### Mount Commands
+
+- **Create a mount point**:  
+  `sudo mkdir /mnt/newmountpoint`  
+
+- **Mount a partition to a mount point**:  
+  `sudo mount -t [FILESYSTEM] /dev/sdXY /mnt/newmountpoint`  
+  Example: `sudo mount -t ext4 /dev/sdb3 /mnt/newmountpoint`  
+
+- **Display all active mount points**:   
+  `mount | grep sd`  
+
+- **Check `/etc/fstab` for permanent mounts**:  
+  `cat /etc/fstab`  
+
+- **Remount with specific options**:  
+  `sudo mount -o remount,[OPTIONS] /mnt/newmountpoint`  
+  Example: `sudo mount -o remount,ro /mnt/newmountpoint`  
+
+- **Mount options**:  
+  - `ro`: Read-only  
+  - `rw`: Read-write  
+  - `remount`: Apply new options to an already mounted device  
+
+- **Unmount a partition**:  
+  `sudo umount /mnt/newmountpoint`  
+  OR  
+  `sudo umount /dev/sdXY`  
+
+
+### UUID Management
+
+- **Retrieve UUID via filesystem details**:  
+`sudo tune2fs -l /dev/sda2 | grep UUID`
