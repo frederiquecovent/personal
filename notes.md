@@ -642,6 +642,10 @@ StrictHostKeyChecking accept-new
   - `sudo mkfs -t ext4 /dev/sdb1`  
   - `sudo mkfs -t vfat /dev/sdb2`  
 
+- **Create a swap partition**:  
+  `sudo mkswap /dev/sdXY`  
+  Example: `sudo mkswap /dev/sdb3`  
+  
 ### Reserved Blocks
 
 - **Check reserved blocks for root**:  
