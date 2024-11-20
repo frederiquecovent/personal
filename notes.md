@@ -645,7 +645,7 @@ StrictHostKeyChecking accept-new
 - **Create a swap partition**:  
   `sudo mkswap /dev/sdXY`  
   Example: `sudo mkswap /dev/sdb3`  
-  
+
 ### Reserved Blocks
 
 - **Check reserved blocks for root**:  
@@ -686,6 +686,10 @@ StrictHostKeyChecking accept-new
 
 
 ### UUID Management
+
+- **Lookup UUID of a device**:  
+  `sudo blkid /dev/sdXY`  
+  Example: `sudo blkid /dev/sda2`  
 
 - **Retrieve UUID via filesystem details**:  
 `sudo tune2fs -l /dev/sda2 | grep UUID`
