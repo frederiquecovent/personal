@@ -663,7 +663,8 @@ StrictHostKeyChecking accept-new
   `mount | grep sd`  
 
 - **Check `/etc/fstab` for permanent mounts**:  
-  `cat /etc/fstab`  
+  `cat /etc/fstab`
+  Example: `/dev/sdc1 /mnt/part1 ext4 defaults,ro 0 0`
 
 - **Remount with specific options**:  
   `sudo mount -o remount,[OPTIONS] /mnt/newmountpoint`  
