@@ -195,6 +195,7 @@
   - `no ipv6 nd managed-config-flag`
   - `no shutdown`
 
+----------------------------------------------
 
 ### SLAAC + DHCP (1 1 0)
 #### Router configuratie
@@ -213,6 +214,7 @@
 `interface <INTERFACE>`
   - `ipv6 dhcp server <POOL_NAAM>`
 
+----------------------------------------------
 
 ### DHCP Only (0 X 1)
 #### Router configuratie
