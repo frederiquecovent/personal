@@ -170,8 +170,19 @@
 - `ip helper-address 10.0.0.1` (DHCP server in ander LAN)
 
 ## 8. SLAAC and DHCPv6
+
 - **DEFAULT GATEWAY wordt automatisch bepaald door RA link-local adres, NIET DOOR DHCP**
 
+### SLAAC:
+1. **Router Solicitation**
+2. **Router Advertisement**
+   
+### DHCP:
+3. **SOLICIT** to all DHCPv6 Servers
+4. **ADVERTISE** Unicast
+5. **REQUEST** or **INFORMATION-REQUEST** Unicast
+6. **REPLY** Unicast
+   
 ### RA Flags
 | A | O | M |              |
 |---|---|---|--------------|
