@@ -222,7 +222,7 @@
 - `ipv6 dhcp pool <POOL_NAAM>`
   - `dns-server 2001:db8:2::53`
   - `domain-name example.com`
-`interface <INTERFACE>`
+- `interface <INTERFACE>`
   - `ipv6 dhcp server <POOL_NAAM>`
  
 #### Router as client
