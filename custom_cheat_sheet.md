@@ -224,6 +224,16 @@
   - `domain-name example.com`
 `interface <INTERFACE>`
   - `ipv6 dhcp server <POOL_NAAM>`
+ 
+#### Router as client
+- `ipv6 unicast-routing`
+- `interface <INTERFACE>`
+  - **`ipv6 address autoconfig`**
+  - `ipv6 enable`
+  - `ipv6 nd other-config-flag`
+  - `no ipv6 nd managed-config-flag`
+  - `no shutdown`
+
 
 ----------------------------------------------
 
@@ -244,6 +254,15 @@
   - `domain-name example.com`
 `interface <INTERFACE>`
   - `ipv6 dhcp server <POOL_NAAM>`
+ 
+#### Router as client
+- `ipv6 unicast-routing`
+- `interface <INTERFACE>`
+  - **`ipv6 address dhcp`**
+  - `ipv6 enable`
+  - `ipv6 nd other-config-flag`
+  - `ipv6 nd managed-config-flag`
+  - `no shutdown`
 
 
 ## 14. Routing Concepts
