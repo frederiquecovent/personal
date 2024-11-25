@@ -115,10 +115,6 @@
 - `show spanning-tree vlan <id>`
 - `show spanning-tree interface <id>`
 - `show spanning-tree root`
-- DTP (dynamic trunking protocol) problemen:
-  - `switchport mode access`
-  - `switchport nonegotiate`
-  - `switchport mode trunk`
 
 ### PortFast and BPDU Guard
 **Enable portfast (only on access ports)**: `spanning-tree portfast` </br>
@@ -126,23 +122,28 @@
 
 ## 6. EtherChannel
 
+### 1. ON
+- ON - ON
 - `int range <range>`
-- `channel-group <id> mode <mode>`
+- `channel-group <id> mode on`
 - `int port-channel <id>`
 - `switchport mode trunk/access`
 
-### Modes
+### 2. PAgP (Port Aggregation Protocol)
+- DESIRABLE - DESIRABLE
+- DESIRABLE - AUTO
+- `int range <range>`
+- `channel-group <id> mode auto/desirable`
+- `int port-channel <id>`
+- `switchport mode trunk/access`
 
-- **1. ON**:
-  - **ON-ON** 
-  - `channel-group <id> mode on`
-- **2. PAgP**:
-  - **DESIRABLE-DESIRABLE** or **DESIRABLE-AUTO**
-  - `channel-group <id> mode auto/desirable`
-- **3. LACP**:
-  - **ACTIVE-ACTIVE** or **ACTIVE-PASSIVE** 
-  - `channel-group <id> mode active/passive`
-    
+### 3. LACP (Link aggregation Control Protocol)
+- ACTIVE - ACTIVE
+- ACTIVE - PASSIVE
+- `int range <range>`
+- `channel-group <id> mode active/passive`
+- `int port-channel <id>`
+- `switchport mode trunk/access`
 
 ### 4. Troubleshooting
 - `show int port-channel`
@@ -150,6 +151,91 @@
 - `show etherchannel port-channel`
 - `show interfaces etherchannel`
 - `show run`
+
+
+
+## 7. DHCPv4
+
+1. **Discover**: Client zendt een broadcast op zoek naar een DHCP-server.
+2. **Offer**: DHCP-server biedt een IP-adres en andere configuratie-informatie aan.
+3. **Request**: Client accepteert het aanbod door een verzoek te sturen naar de server.
+4. **Acknowledge**: DHCP-server bevestigt het gebruik van de toegewezen configuratie.
+
+### Router Configuratie
+- `ip dhcp excluded-address 192.168.10.1`
+- `ip dhcp pool <NAAM>`
+ - `network 192.168.10.0 255.255.255.0`
+  -`default-router 192.168.10.1`
+ - `dns-server 192.168.11.5`
+- `ip helper-address 10.0.0.1` (DHCP server in ander LAN)
+
+### Client configuratie
+- `interface <INTERFACE>`
+ - `ip address dhcp`
+ - `no shutdown`
+
+## 8. SLAAC and DHCPv6
+- **DEFAULT GATEWAY wordt automatisch bepaald door RA link-local adres, NIET DOOR DHCP**
+
+### RA Flags
+| A | O | M |              |
+|---|---|---|--------------|
+| 1 | 0 | 0 | SLAAC Only   |
+| 1 | 1 | 0 | SLAAC + DHCP |
+| 0 | X | 1 | DHCP Only    |
+
+### Vereisten
+1. **GUA**: `ipv6 address 2001:db8:acad:1::1/64`
+2. **Link-local**: `ipv6 address fe80::1 link-local`
+3. **All-nodes group (FF02::1)**
+4. **All routers multicast group (FF02::2)**: `ipv6 unicast-routing`
+
+### SLAAC Only (1 0 0)
+#### Router configuratie
+- `ipv6 unicast-routing`
+- `interface <INTERFACE>`
+ - `ipv6 address 2001:db8:acad:1::1/64`
+ - `ipv6 enable`
+ - `no ipv6 nd other-config-flag`
+ - `no ipv6 nd managed-config-flag`
+ - `no shutdown`
+
+
+### SLAAC + DHCP (1 1 0)
+#### Router configuratie
+- `ipv6 unicast-routing`
+- `interface <INTERFACE>`
+ - `ipv6 address 2001:db8:acad:1::1/64`
+ - `ipv6 enable`
+ - `ipv6 nd other-config-flag`
+ - `no ipv6 nd managed-config-flag`
+ - `no shutdown`
+
+#### DHCP Server configuratie
+- `ipv6 dhcp pool <POOL_NAAM>`
+ - `dns-server 2001:db8:2::53`
+ - `domain-name example.com`
+`interface <INTERFACE>`
+ - `ipv6 dhcp server <POOL_NAAM>`
+
+
+### DHCP Only (0 X 1)
+#### Router configuratie
+- `ipv6 unicast-routing`
+- `interface <INTERFACE>`
+ - `ipv6 address 2001:db8:acad:1::1/64`
+ - `ipv6 enable`
+ - `ipv6 nd other-config-flag`
+ - `ipv6 nd managed-config-flag`
+ - `no shutdown`
+
+#### DHCP Server configuratie
+- `ipv6 dhcp pool <POOL_NAAM>`
+ - `address prefix 2001:db8:acad:1::/64`
+ - `dns-server 2001:db8:2::53`
+ - `domain-name example.com`
+`interface <INTERFACE>`
+ - `ipv6 dhcp server <POOL_NAAM>`
 
 
 ## 14. Routing Concepts
