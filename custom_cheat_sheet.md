@@ -193,8 +193,9 @@
 ### Vereisten
 1. **GUA**: `ipv6 address 2001:db8:acad:1::1/64`
 2. **Link-local**: `ipv6 address fe80::1 link-local`
-3. **All-nodes group (FF02::1)**
-4. **All routers multicast group (FF02::2)**: `ipv6 unicast-routing`
+3. **Multicast groups**: `ipv6 unicast-routing`
+    - **All-nodes group (FF02::1)**
+    - **All routers multicast group (FF02::2)**
 
 ### SLAAC Only (1 0 0)
 #### Router configuratie
