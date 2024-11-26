@@ -228,10 +228,8 @@
 #### Router as client
 - `ipv6 unicast-routing`
 - `interface <INTERFACE>`
-  - **`ipv6 address autoconfig`**
   - `ipv6 enable`
-  - `ipv6 nd other-config-flag`
-  - `no ipv6 nd managed-config-flag`
+  - **`ipv6 address autoconfig`**
   - `no shutdown`
 
 
@@ -258,10 +256,8 @@
 #### Router as client
 - `ipv6 unicast-routing`
 - `interface <INTERFACE>`
-  - **`ipv6 address dhcp`**
   - `ipv6 enable`
-  - `ipv6 nd other-config-flag`
-  - `ipv6 nd managed-config-flag`
+  - **`ipv6 address dhcp`**
   - `no shutdown`
 
 
