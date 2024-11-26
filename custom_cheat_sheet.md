@@ -250,7 +250,7 @@
   - `address prefix 2001:db8:acad:1::/64`
   - `dns-server 2001:db8:2::53`
   - `domain-name example.com`
-`interface <INTERFACE>`
+- `interface <INTERFACE>`
   - `ipv6 dhcp server <POOL_NAAM>`
  
 #### Router as client
