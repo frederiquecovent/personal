@@ -186,7 +186,14 @@ host LinuxMint22 {
 }
 ```
 
-- **Enable NAT routing**: `sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -o [NAT INTERFACE] -j MASQUERADE`
+- **Enable NAT routing**: 
+```bash
+sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -o [NAT INTERFACE] -j MASQUERADE
+sudo firewall-cmd --add-masquerade --permanent
+sudo firewall-cmd --reload
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+sysctl -p
+```
 
 #### Network monitoring & troubleshooting
 
@@ -693,3 +700,145 @@ StrictHostKeyChecking accept-new
 
 - **Retrieve UUID via filesystem details**:  
 `sudo tune2fs -l /dev/sda2 | grep UUID`
+
+## Labo 10: DNS met BIND
+
+- **Install BIND**: `sudo dnf -y install bind`
+
+- **BIND Configuration File (/etc/named.conf)**:
+```bash
+//
+// named.conf
+//
+// Provided by Red Hat bind package to configure the ISC BIND named(8) DNS
+// server as a caching only nameserver (as a localhost DNS resolver only).
+//
+// See /usr/share/doc/bind*/sample/ for example named configuration files.
+//
+
+options {
+        listen-on port 53 { any; };
+        listen-on-v6 port 53 { any; };
+        directory       "/var/named";
+        dump-file       "/var/named/data/cache_dump.db";   
+        statistics-file "/var/named/data/named_stats.txt"; 
+        memstatistics-file "/var/named/data/named_mem_stats.txt";
+        secroots-file   "/var/named/data/named.secroots";  
+        recursing-file  "/var/named/data/named.recursing"; 
+        allow-query     { any; };
+
+        /*
+         - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
+         - If you are building a RECURSIVE (caching) DNS server, you need to enable
+           recursion.
+         - If your recursive DNS server has a public IP address, you MUST enable access
+           control to limit queries to your legitimate users. Failing to do so will
+           cause your server to become part of large scale DNS amplification
+           attacks. Implementing BCP38 within your network would greatly
+           reduce such attack surface
+        */
+        recursion yes;
+
+        dnssec-validation no;
+
+        managed-keys-directory "/var/named/dynamic";       
+        geoip-directory "/usr/share/GeoIP";
+
+        pid-file "/run/named/named.pid";
+        session-keyfile "/run/named/session.key";
+
+        /* https://fedoraproject.org/wiki/Changes/CryptoPolicy */
+        include "/etc/crypto-policies/back-ends/bind.config";
+};
+
+logging {
+        channel default_debug {
+                file "data/named.run";
+                severity dynamic;
+        };
+};
+
+zone "." IN {
+        type hint;
+        file "named.ca";
+};
+
+zone "linux.lan" IN {
+  type primary;
+  file "linux.lan";
+  notify yes;
+  allow-update { none; };
+};
+
+zone "76.168.192.in-addr.arpa" IN {
+  type primary;
+  file "76.168.192.in-addr.arpa";
+  notify yes;
+  allow-update { none; };
+};
+
+include "/etc/named.rfc1912.zones";
+include "/etc/named.root.key";
+```
+
+- **BIND Forward Zone File (/var/named/linux.lan)**: 
+```bash
+$ORIGIN linux.lan.
+$TTL 1W
+
+@ IN SOA srv.linux.lan. hostmaster.linux.lan. (
+  21120117 1D 1H 1W 1D )
+
+       IN  NS     srv
+
+       IN  MX     10 mail
+
+db     IN  A      192.168.76.3
+
+web    IN  A      192.168.76.4
+www    IN  CNAME  web
+
+srv    IN  A      192.168.76.254
+
+mail   IN  A      192.168.76.10
+smtp   IN  CNAME  mail
+imap   IN  CNAME  mail
+```
+
+- **BIND Reverse Zone File (/var/named/76.168.192.in-addr.arpa)**:
+```bash
+$TTL 1W
+$ORIGIN 76.168.192.in-addr.arpa.
+
+@ IN SOA srv.linux.lan. hostmaster.linux.lan. (
+  21120117 1D 1H 1W 1D )
+
+       IN  NS     srv.linux.lan.
+
+254    IN  PTR    srv.linux.lan.
+4      IN  PTR    web.linux.lan.
+3      IN  PTR    db.linux.lan.
+10     IN  PTR    mail.linux.lan.
+
+```
+
+- **Start and Enable BIND**:
+```bash
+sudo systemctl enable named
+sudo systemctl start named
+```
+
+- **Check BIND Config**:
+```bash
+sudo named-checkconf
+sudo named-checkzone linux.lan /var/named/linux.lan
+sudo named-checkzone 76.168.192.in-addr.arpa /var/named/76.168.192.in-addr.arpa
+```
+
+- **Firewall Config**:
+```bash
+sudo systemctl enable firewalld
+sudo systemctl start firewalld
+sudo firewall-cmd --add-service=dns --permanent
+sudo firewall-cmd --reload
+```
