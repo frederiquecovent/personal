@@ -71,32 +71,69 @@
 ### Router-on-a-Stick Configuration
 
 **1.** Create and name the VLANs </br>
+```
+vlan <vlan-id>
+name <vlan-name>
+```
 **2.** Create the management interface </br>
+```
+interface vlan <vlan-id>
+ip address <ip> <subnet mask>
+no shutdown
+```
 **3.** Configure access ports </br>
+```
+interface <interface-id>
+switchport mode access
+switchport access vlan <vlan-id>
+```
 **4.** Configure trunking ports  </br>
-
-- `interface <interface>.<subinterface-number>` - Creates a subinterface (e.g., `g0/1.10`).
-  - `encapsulation dot1Q <vlan-id>` - Configures VLAN tagging on the subinterface.
-  - `ip address <ip> <subnet mask>` - Sets the IP address for the subinterface (gateway for the VLAN).
+```
+interface <interface-id>
+switchport mode trunk
+switchport trunk allowed vlan <vlan-id>,<vlan-id>
+```
+**5.** Configuring subinterfaces </br>
+```
+interface <interface>.<subinterface-number>
+encapsulation dot1Q <vlan-id>
+ip address <ip> <subnet mask>
+```
 
 ### Layer 3 Switch (SVI) Configuration
 
 #### Switch configuration:
 **1.** Create and name the VLANs </br>
+```
+vlan <vlan-id>
+name <vlan-name>
+```
 **2.** Create the SVI VLAN interfaces </br>
+```
+interface vlan <vlan-id>
+ip address <ip> <subnet mask>
+no shutdown
+```
 **3.** Configure access ports </br>
-**4.** Enable IP routing (`ip routing`) </br>
+```
+interface <interface-id>
+switchport mode access
+switchport access vlan <vlan-id>
+```
+**4.** Enable IP routing </br>
+```
+ip routing
+```
 
 #### Routing configuration on a Layer 3 Switch:
-**1.** Configure the routed port (`no switchport`) </br>
-**2.** Assign an IP and subnet </br>
-**3.** Enable the port </br>
-**4.** Enable routing </br>
-**5.** Configure routing (ex. static routing) </br>
-
-- `interface vlan <vlan-id>` - Creates an SVI (Switch Virtual Interface) for VLAN.
-  - `ip address <ip> <subnet mask>` - Assigns an IP to the VLAN interface.
-  - `no shutdown` - Enables the SVI.
+**1.** Configure the routed port </br>
+```
+interface <interface-id>
+no switchport
+ip address <ip> <subnet mask>
+no shutdown
+```
+**2.** Configure routing (ex. static routing) </br>
 
 ### Verification
 - `show ip route` - Displays the routing table (to check if VLANs are reachable).
