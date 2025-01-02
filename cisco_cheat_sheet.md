@@ -337,6 +337,7 @@ no shutdown
 
 ### Default Static Route
 - `ip route 0.0.0.0 0.0.0.0 <next-hop-ip or exit-interface>` - Sets a default route (gateway of last resort).
+- IPv6 - `::/0`
 
 ### Floating Static Route (Backup path)
 - `ip route 0.0.0.0 0.0.0.0 <next-hop-ip>` - Sets a default route (gateway of last resort).
