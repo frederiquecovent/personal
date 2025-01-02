@@ -120,7 +120,13 @@ interface <interface-id>
 switchport mode access
 switchport access vlan <vlan-id>
 ```
-**4.** Enable IP routing </br>
+**3.** Configure trunking ports </br>
+```
+interface <interface-id>
+switchport mode trunk
+switchport trunk encapsulation dot1q
+```
+**5.** Enable IP routing </br>
 ```
 ip routing
 ```
