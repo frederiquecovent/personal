@@ -303,7 +303,18 @@ no shutdown
   - `ipv6 enable`
   - **`ipv6 address dhcp`**
   - `no shutdown`
+ 
 
+## 9. FHRP (HSRP)
+
+### Basic configuration
+```
+interface <interface-id>
+ ip address <real-ip> <subnet-mask>
+ standby <group-number> ip <virtual-ip>
+```
+- **Set priority**: `standby <group-number> priority <0-150>`
+- **Enable preemption**: `standby <group-number> preempt`
 
 ## 14. Routing Concepts
 
