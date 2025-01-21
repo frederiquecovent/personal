@@ -6,7 +6,7 @@
 
 - **UID / GID vinden**: `id`
 - **(Interactive) gebruiker aanmaken**: `sudo adduser [GEBRUIKER]`
-- **Gebruiker aanmaken**: `sudo useradd -m [GEBRUIKER]` (m = maak home directory)
+- **Gebruiker aanmaken**: `sudo useradd -m -s /bin/bash -c "Volledige Naam" [GEBRUIKER]` (m = maak home directory, s = shell)
 - **UID, gebruikersnaam, homedirectory, etc.**: `sudo cat /etc/passwd`
 - **Groepen en leden van die groepen**: `cat /etc/group`
 - **Wachtwoorden van gebruikers (hash)**: `sudo cat /etc/shadow`
