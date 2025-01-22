@@ -160,11 +160,33 @@
 - **Domain IP**: `host www.example.com` OR `dig www.example.com`
 - **Public IP**: `curl icanhazip.com`
 
+#### Configuratie (Debian-based)
+
+- **Configure network interface**: `nano /etc/network/interfaces`
+- **Restart network**: `sudo ifdown [INTERFACE]` & `sudo ifup [INTERFACE]`
+
+
 #### Configuratie (Red Hat-based)
 
 - **Configure network interface**: `nano /etc/sysconfig/network-scripts/ifcfg-[INTERFACE]`
 - **Restart network**: `sudo systemctl restart network`
-- **Apply network changes**: `sudo nmcli device reapply [INTERFACE]`
+- **Apply network changes**: `sudo nmcli device reapply [INTERFACE]` OR `sudo nmcli connection reload`
+- **Bring interface up**: `nmcli connection show` & `sudo nmcli connection up 'System eth1'`
+
+##### NetworkManager (EL >= 7, Fedora, Mint, ...)
+
+- **Show settings**: `nmcli -f IP4 device show [INTERFACE]`
+```
+sudo nmcli connection modify eth1 \
+  ipv4.method manual \
+  ipv4.addresses 192.168.56.9/24 ipv4.gateway 192.168.56.254 \
+  ipv4.dns 192.168.56.254 ipv4.dns-search example.com
+```
+OR
+```
+sudo nmcli connection modify eth1 ipv4.method auto
+```
+- **Apply settings**: `sudo nmcli connection up [INTERFACE]`
 
 #### DHCP Server Setup
 
