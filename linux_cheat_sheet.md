@@ -208,6 +208,7 @@ host LinuxMint22 {
     default-lease-time 86400;
 }
 ```
+- **Test config file**: `dhcpd -t -cf /etc/dhcp/dhcpd.conf`
 
 - **Enable NAT routing**: 
 ```bash
