@@ -654,6 +654,7 @@ StrictHostKeyChecking accept-new
 
 ## Labo 9: Mount
 
+- **List block devices**: `lsblk`
 - **List Sata disk devices**: `ls /dev/sd*`
 
 ### Partition Management
