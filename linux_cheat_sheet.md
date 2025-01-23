@@ -162,7 +162,19 @@
 
 #### Configuratie (Debian-based)
 
-- **Configure network interface**: `nano /etc/network/interfaces`
+- **Configure network interface**: `sudo nano /etc/netplan/1-network-manager-all.yaml`
+```
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    enp2s0:
+      dhcp4: no
+      addresses: [192.168.1.200/24]
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+```
 - **Restart network**: `sudo ifdown [INTERFACE]` & `sudo ifup [INTERFACE]`
 
 
