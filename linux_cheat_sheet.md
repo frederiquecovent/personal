@@ -168,12 +168,11 @@ network:
   version: 2
   renderer: NetworkManager
   ethernets:
-    enp2s0:
-      dhcp4: no
-      addresses: [192.168.1.200/24]
-      gateway4: 192.168.1.1
+    enp0s8:
+      dhcp4: yes
       nameservers:
-        addresses: [8.8.8.8, 8.8.4.4]
+        addresses:
+          - 192.168.76.12
 ```
 - **Restart network**: `sudo ifdown [INTERFACE]` & `sudo ifup [INTERFACE]`
 
