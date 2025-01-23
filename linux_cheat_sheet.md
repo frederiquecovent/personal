@@ -175,6 +175,8 @@
 
 ##### NetworkManager (EL >= 7, Fedora, Mint, ...)
 
+- **UI based configuration**: `nmtui`
+
 - **Show settings**: `nmcli -f IP4 device show [INTERFACE]`
 ```
 sudo nmcli connection modify eth1 \
