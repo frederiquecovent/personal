@@ -212,14 +212,16 @@ default-lease-time 10800;
 max-lease-time 86400;
 
 subnet 192.168.76.0 netmask 255.255.255.0 {
-    range 192.168.76.101 192.168.76.253;
-    option routers 192.168.76.12;
+        range 192.168.76.101 192.168.76.253;
+        option routers 192.168.76.12;
+        option domain-name "linux.lan";
+        option domain-name-servers srv.linux.lan;
 }
 
 host LinuxMint22 {
-    hardware ethernet 08:00:27:e1:3b:3d;
-    fixed-address 192.168.76.150;
-    default-lease-time 86400;
+        hardware ethernet 08:00:27:2f:c1:3b;
+        fixed-address 192.168.76.150;
+        default-lease-time 86400;
 }
 ```
 - **Test config file**: `dhcpd -t -cf /etc/dhcp/dhcpd.conf`
