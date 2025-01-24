@@ -666,6 +666,19 @@ HostKeyAlgorithms=-ssh-rsa
 StrictHostKeyChecking accept-new
 ```
 
+#### SCP Examples
+Here is an example where we copy the /etc/hosts file from the remote server to the home directory of user paul.
+```
+paul@linux:~$ scp admin42@192.168.1.30:/etc/hosts /home/paul/serverhosts
+admin42@192.168.1.30's password: 
+hosts                                        100%  809     0.8KB/s   00:00
+```
+Here is an example of the reverse, copying a local file to a remote server.
+```
+student@linux:~$ scp ~/serverhosts admin42@192.168.1.30:/etc/hosts.new
+admin42@192.168.1.30's password: 
+serverhosts              
+```
 
 ## Labo 9: Mount
 
