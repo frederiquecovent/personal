@@ -1,0 +1,4 @@
+address=/acacia/10.10.1.1
+interface=vmbr0
+dhcp-range=10.10.1.100,10.10.1.150,255.255.255.0,24h
+dhcp-option=3,10.10.1.1
