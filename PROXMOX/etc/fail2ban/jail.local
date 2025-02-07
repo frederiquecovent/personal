@@ -1,0 +1,8 @@
+[iptables]
+enabled = true
+port = https,http
+filter = iptables
+banaction = proxmox-firewall
+maxretry = 3
+findtime = 2d
+bantime = 1h
