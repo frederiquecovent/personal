@@ -11,6 +11,16 @@ fi
 ACTION=$1
 IP=$2
 
+# Ensure cluster firewall file exists
+if [ ! -f "$PVE_CLUSTER_FW" ]; then
+    touch "$PVE_CLUSTER_FW"
+fi
+
+# Ensure node firewall file exists
+if [ ! -f "$PVE_NODE_FW" ]; then
+    touch "$PVE_NODE_FW"
+fi
+
 if [ "$ACTION" == "add" ]; then
     # Add rule to cluster firewall if not already present
     if ! grep -q "IN DROP -source $IP" "$PVE_CLUSTER_FW"; then
