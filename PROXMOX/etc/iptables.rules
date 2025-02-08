@@ -24,6 +24,5 @@ COMMIT
 -A PREROUTING -p tcp -m tcp --dport 443 -m limit --limit 5/min -j LOG --log-prefix "REAL-IP: "
 
 # NAT (Masquerade for outgoing traffic)
--A POSTROUTING -o vmbr0 -j MASQUERADE
 -A POSTROUTING -s 10.10.1.0/24 -o wlo1 -j MASQUERADE
 COMMIT
