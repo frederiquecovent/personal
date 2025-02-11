@@ -7,35 +7,4 @@ ebtables: 0
 
 IN ACCEPT -dest 255.255.255.255 -p udp -dport 67 -log nolog # DHCP
 IN ACCEPT -p udp -dport 53 -log nolog # DNS
-IN ACCEPT -source 173.245.48.0/20 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 103.21.244.0/22 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 103.22.200.0/22 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 103.31.4.0/22 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 141.101.64.0/18 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 108.162.192.0/18 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 190.93.240.0/20 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 188.114.96.0/20 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 197.234.240.0/22 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 198.41.128.0/17 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 162.158.0.0/15 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 104.16.0.0/13 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 104.24.0.0/14 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 172.64.0.0/13 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 131.0.72.0/22 -p tcp -dport 80 -log nolog # Cloudflare IP
-IN ACCEPT -source 173.245.48.0/20 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 103.21.244.0/22 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 103.22.200.0/22 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 103.31.4.0/22 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 141.101.64.0/18 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 108.162.192.0/18 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 190.93.240.0/20 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 188.114.96.0/20 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 197.234.240.0/22 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 198.41.128.0/17 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 162.158.0.0/15 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 104.16.0.0/13 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 104.24.0.0/14 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 172.64.0.0/13 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN ACCEPT -source 131.0.72.0/22 -p tcp -dport 443 -log nolog # Cloudflare IP
-IN DROP -p icmp -log nolog
 IN DROP -log nolog
