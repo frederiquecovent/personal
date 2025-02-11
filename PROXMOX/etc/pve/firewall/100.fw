@@ -1,8 +1,0 @@
-[OPTIONS]
-
-macfilter: 0
-enable: 1
-
-[RULES]
-
-IN DROP -log nolog
