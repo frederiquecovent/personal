@@ -1,6 +1,5 @@
 #!/bin/bash
 
-PVE_CLUSTER_FW="/etc/pve/firewall/cluster.fw"
 PVE_NODE_FW="/etc/pve/firewall/100.fw"
 
 if [ "$#" -ne 2 ]; then
@@ -11,30 +10,17 @@ fi
 ACTION=$1
 IP=$2
 
-# Ensure cluster firewall file exists
-if [ ! -f "$PVE_CLUSTER_FW" ]; then
-    touch "$PVE_CLUSTER_FW"
-fi
-
 # Ensure node firewall file exists
 if [ ! -f "$PVE_NODE_FW" ]; then
     touch "$PVE_NODE_FW"
 fi
 
 if [ "$ACTION" == "add" ]; then
-    # Add rule to cluster firewall if not already present
-    if ! grep -q "IN DROP -source $IP" "$PVE_CLUSTER_FW"; then
-        echo "IN DROP -source $IP -log nolog # Fail2Ban Blocked" >> "$PVE_CLUSTER_FW"
-    fi
-
     # Add rule to node firewall if not already present
     if ! grep -q "IN DROP -source $IP" "$PVE_NODE_FW"; then
         echo "IN DROP -source $IP -log nolog # Fail2Ban Blocked" >> "$PVE_NODE_FW"
     fi
 elif [ "$ACTION" == "remove" ]; then
-    # Remove rule from cluster firewall
-    sed -i "/IN DROP -source $IP -log nolog # Fail2Ban Blocked/d" "$PVE_CLUSTER_FW"
-
     # Remove rule from node firewall
     sed -i "/IN DROP -source $IP -log nolog # Fail2Ban Blocked/d" "$PVE_NODE_FW"
 else
