@@ -9,6 +9,44 @@ COMMIT
 :INPUT ACCEPT [0:0]
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
+
+# Allow forwarding for HTTP (80) and HTTPS (443) only from Cloudflare IPs
+-A FORWARD -p tcp -s 173.245.48.0/20 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 103.21.244.0/22 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 103.22.200.0/22 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 103.31.4.0/22 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 141.101.64.0/18 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 108.162.192.0/18 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 190.93.240.0/20 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 188.114.96.0/20 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 197.234.240.0/22 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 198.41.128.0/17 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 162.158.0.0/15 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 104.16.0.0/13 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 104.24.0.0/14 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 172.64.0.0/13 -d 10.10.1.151 --dport 80 -j ACCEPT
+-A FORWARD -p tcp -s 131.0.72.0/22 -d 10.10.1.151 --dport 80 -j ACCEPT
+
+-A FORWARD -p tcp -s 173.245.48.0/20 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 103.21.244.0/22 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 103.22.200.0/22 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 103.31.4.0/22 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 141.101.64.0/18 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 108.162.192.0/18 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 190.93.240.0/20 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 188.114.96.0/20 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 197.234.240.0/22 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 198.41.128.0/17 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 162.158.0.0/15 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 104.16.0.0/13 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 104.24.0.0/14 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 172.64.0.0/13 -d 10.10.1.151 --dport 443 -j ACCEPT
+-A FORWARD -p tcp -s 131.0.72.0/22 -d 10.10.1.151 --dport 443 -j ACCEPT
+
+# Drop all other traffic to the web server
+-A FORWARD -p tcp -d 10.10.1.151 --dport 80 -j DROP
+-A FORWARD -p tcp -d 10.10.1.151 --dport 443 -j DROP
+
 COMMIT
 
 *nat
@@ -16,6 +54,10 @@ COMMIT
 :INPUT ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
+
+# Port forwarding rules (remains the same)
+-A PREROUTING -p tcp --dport 80 ! -s 10.10.1.0/24 -j DNAT --to-destination 10.10.1.151:80
+-A PREROUTING -p tcp --dport 443 ! -s 10.10.1.0/24 -j DNAT --to-destination 10.10.1.151:443
 
 # NAT (Masquerade for outgoing traffic)
 -A POSTROUTING -s 10.10.1.0/24 -o wlo1 -j MASQUERADE
