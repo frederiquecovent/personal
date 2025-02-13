@@ -1,0 +1,12 @@
+[OPTIONS]
+
+enable: 1
+
+[RULES]
+
+IN ACCEPT -source 100.64.0.0/10 -p tcp -dport 3000 # Grafana
+IN ACCEPT -source 100.64.0.0/10 -p tcp -dport 22 -log nolog # SSH
+
+IN DROP -p icmp -log nolog # ICMP
+
+IN DROP -log nolog
