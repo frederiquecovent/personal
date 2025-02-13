@@ -1,1 +1,0 @@
-frederique@10.10.1.151:/var/log/nginx /var/log/nginx-vm fuse.sshfs noauto,x-systemd.automount,_netdev,IdentityFile=/home/frederique/.ssh/id_rsa,allow_other,default_permissions,port=22 0 0
