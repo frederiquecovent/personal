@@ -25,6 +25,14 @@ COMMIT
 -A INPUT -p udp --dport 67:68 -j ACCEPT
 -A INPUT -p udp --dport 53 -j ACCEPT
 
+# Allow DNS for your Windows host (192.168.0.100)
+-A INPUT -s 192.168.0.100 -p udp --dport 53 -d 10.10.1.154 -j ACCEPT
+-A INPUT -s 192.168.0.100 -p tcp --dport 53 -d 10.10.1.154 -j ACCEPT
+
+# Drop all other DNS requests to AdGuard from external networks
+-A INPUT -d 10.10.1.154 -p udp --dport 53 -j DROP
+-A INPUT -d 10.10.1.154 -p tcp --dport 53 -j DROP
+
 # VM forwarding rules
 -A FORWARD -i vmbr0 -o wlo1 -j ACCEPT
 -A FORWARD -i wlo1 -o vmbr0 -m state --state ESTABLISHED,RELATED -j ACCEPT
