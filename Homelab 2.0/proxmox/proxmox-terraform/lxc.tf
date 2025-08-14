@@ -24,20 +24,22 @@ resource "proxmox_lxc" "container" {
     ip     = "dhcp"
   }
 
-  # SSH key setup
-   provisioner "remote-exec" {
-     inline = [
-       "mkdir -p /root/.ssh",
-       "echo '${file(var.lxc_ssh_pubkey)}' >> /root/.ssh/authorized_keys",
-       "chmod 600 /root/.ssh/authorized_keys",
-       "chmod 700 /root/.ssh"
-     ]
-
-     connection {
-       type     = "ssh"
-       user     = "root"
-       password = var.container_password
-       host     = self.network[0].ip
-     }
-   }
+  # Fix SSH and setup keys via Proxmox host
+  provisioner "local-exec" {
+    command = <<-EOT
+      sleep 20
+      sudo pct exec ${self.vmid} -- bash -c '
+        sed -i "s/#*PermitRootLogin.*/PermitRootLogin yes/" /etc/ssh/sshd_config
+        systemctl restart ssh || systemctl restart sshd
+        mkdir -p /root/.ssh
+        chmod 700 /root/.ssh
+      '
+      sudo pct exec ${self.vmid} -- bash -c 'echo "${var.lxc_ssh_pubkey}" >> /root/.ssh/authorized_keys'
+      sudo pct exec ${self.vmid} -- bash -c 'chmod 600 /root/.ssh/authorized_keys'
+      sudo pct exec ${self.vmid} -- bash -c '
+        sed -i "s/PermitRootLogin yes/PermitRootLogin prohibit-password/" /etc/ssh/sshd_config
+        systemctl restart ssh || systemctl restart sshd
+      '
+    EOT
+  }
 }
