@@ -8,11 +8,6 @@ output "lxc_ips" {
   ]
 }
 
-output "vm_names" {
-  description = "Names of created VMs"
-  value = [for vm in proxmox_vm_qemu.vm : vm.name]
-}
-
 output "vm_ips" {
   description = "IP addresses of created VMs"
   value = [
