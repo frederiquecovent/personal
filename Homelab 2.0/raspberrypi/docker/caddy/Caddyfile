@@ -1,0 +1,11 @@
+http://glances.acacia {
+    reverse_proxy <PI_IP>:61208
+}
+
+http://adguardhome.acacia {
+    reverse_proxy <PI_IP>:8080
+}
+
+http://uptimekuma.acacia {
+    reverse_proxy <PI_IP>:3001
+}
