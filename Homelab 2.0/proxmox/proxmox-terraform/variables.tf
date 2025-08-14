@@ -91,7 +91,7 @@ variable "vm_name_prefix" {
 variable "vm_template" {
   description = "Proxmox VM template to clone"
   type        = string
-  default     = "ubuntu-22.04-template"
+  default     = "ubuntu-cloud-template"
 }
 
 variable "vm_cores" {
