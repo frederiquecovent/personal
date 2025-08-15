@@ -1,6 +1,6 @@
 # General
 variable "proxmox_user" { type = string }
-variable "proxmox_password" { type = string, sensitive = true }
+variable "proxmox_password" { type = string }
 variable "target_node" { type = string }
 variable "storage_pool" { type = string }
 
