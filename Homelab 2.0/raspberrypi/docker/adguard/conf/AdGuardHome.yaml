@@ -145,17 +145,17 @@ filtering:
   blocking_mode: default
   parental_block_host: family-block.dns.adguard.com
   safebrowsing_block_host: standard-block.dns.adguard.com
-  rewrites:   # DNS rewrites for glances, adguardhome, uptimekuma and proxmox web ui
+  rewrites:   # DNS rewrites for glances, adguardhome, uptimekuma, code-server and proxmox web ui
     - domain: glances.acacia
       answer: <PI_IP>
     - domain: adguardhome.acacia
       answer: <PI_IP>
     - domain: uptimekuma.acacia
       answer: <PI_IP>
+    - domain: code.acacia
+      answer: <PI_IP>
     - domain: proxmox.acacia
       answer: <PROXMOX_IP>
-    - domain: code.acacia
-      answer: <VM_IP>
   safe_fs_patterns:
     - /opt/adguardhome/work/userfilters/*
   safebrowsing_cache_size: 1048576
