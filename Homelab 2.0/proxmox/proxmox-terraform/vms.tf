@@ -1,6 +1,6 @@
 resource "proxmox_vm_qemu" "vm" {
-  count       = var.vm_count
-  name        = "${var.vm_name_prefix}${count.index + 1}"
+  count       = length(var.vm_names)
+  name        = var.vm_names[count.index]
   target_node = var.target_node
   clone       = var.vm_template
   full_clone  = true
@@ -8,9 +8,9 @@ resource "proxmox_vm_qemu" "vm" {
 
   # Resource allocation
   cpu {
-    cores = var.vm_cores
+    cores = var.vm_cores[count.index]
   }
-  memory = var.vm_memory
+  memory = var.vm_memory[count.index]
 
   # Main disk - cloned from template
   disks {

@@ -1,20 +1,20 @@
 resource "proxmox_lxc" "container" {
-  count        = var.lxc_count
+  count        = length(var.lxc_names)
   target_node  = var.target_node
-  hostname     = "${var.lxc_name_prefix}${count.index + 1}"
+  hostname     = var.lxc_names[count.index]
   ostemplate   = var.lxc_template
   password     = var.lxc_password
-  unprivileged = true
+  unprivileged = false        # NOTE: PRIVILEGED CONTAINER!
   start        = true
 
   # Resource allocation
-  cores  = var.lxc_cores
-  memory = var.lxc_memory
+  cores  = var.lxc_cores[count.index]
+  memory = var.lxc_memory[count.index]
 
   # Root filesystem
   rootfs {
     storage = var.storage_pool
-    size    = var.lxc_disk_size
+    size    = var.lxc_disk_sizes[count.index]
   }
 
   # Network
@@ -22,6 +22,12 @@ resource "proxmox_lxc" "container" {
     name   = "eth0"
     bridge = "vmbr0"
     ip     = "dhcp"
+  }
+
+  # Features needed for Docker
+  features {
+    nesting = true
+    keyctl  = true
   }
 
   # Fix SSH and setup keys via Proxmox host
