@@ -7,15 +7,21 @@ resource "proxmox_vm_qemu" "vm" {
   agent       = 1
 
   # Resource allocation
-  cores  = var.vm_cores
+  cpu {
+    cores = var.vm_cores
+  }
   memory = var.vm_memory
 
-  # Disk
-  disk {
-    slot    = "scsi0"
-    storage = var.storage_pool
-    type    = "disk"
-    size    = var.vm_disk_size
+  # Main disk - cloned from template
+  disks {
+    scsi {
+      scsi0 {
+        disk {
+          size    = var.vm_disk_size
+          storage = var.storage_pool
+        }
+      }
+    }
   }
 
   # Network
@@ -24,14 +30,6 @@ resource "proxmox_vm_qemu" "vm" {
     model  = "virtio"
     bridge = "vmbr0"
   }
-
-  # Cloud-init configuration
-  ciuser     = var.vm_user
-  cipassword = var.vm_password
-  sshkeys    = file(var.vm_ssh_pubkey)
-
-  # Boot settings
-  boot = "cdn"
 
   # Don't start automatically
   onboot = false

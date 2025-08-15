@@ -34,7 +34,7 @@ resource "proxmox_lxc" "container" {
         mkdir -p /root/.ssh
         chmod 700 /root/.ssh
       '
-      sudo pct exec ${self.vmid} -- bash -c 'echo "${var.lxc_ssh_pubkey}" >> /root/.ssh/authorized_keys'
+      sudo pct exec ${self.vmid} -- bash -c 'echo "${file(var.lxc_ssh_pubkey)}" >> /root/.ssh/authorized_keys'
       sudo pct exec ${self.vmid} -- bash -c 'chmod 600 /root/.ssh/authorized_keys'
       sudo pct exec ${self.vmid} -- bash -c '
         sed -i "s/PermitRootLogin yes/PermitRootLogin prohibit-password/" /etc/ssh/sshd_config
