@@ -24,12 +24,6 @@ resource "proxmox_lxc" "container" {
     ip     = "dhcp"
   }
 
-  # Features needed for Docker
-  features {
-    nesting = true
-    keyctl  = true
-  }
-
   # Fix SSH and setup keys via Proxmox host
   provisioner "local-exec" {
     command = <<-EOT
