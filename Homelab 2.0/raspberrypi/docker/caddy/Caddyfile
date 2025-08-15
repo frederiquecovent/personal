@@ -9,3 +9,7 @@ http://adguardhome.acacia {
 http://uptimekuma.acacia {
     reverse_proxy <PI_IP>:3001
 }
+
+http://code.acacia {
+    reverse_proxy <VM_IP>:8443
+}

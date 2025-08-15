@@ -154,6 +154,8 @@ filtering:
       answer: <PI_IP>
     - domain: proxmox.acacia
       answer: <PROXMOX_IP>
+    - domain: code.acacia
+      answer: <VM_IP>
   safe_fs_patterns:
     - /opt/adguardhome/work/userfilters/*
   safebrowsing_cache_size: 1048576
