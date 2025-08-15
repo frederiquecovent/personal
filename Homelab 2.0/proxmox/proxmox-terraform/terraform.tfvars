@@ -12,7 +12,7 @@ lxc_cores         = 2
 lxc_memory        = 1024                # MB
 lxc_disk_size     = "10G"
 lxc_password      = "<PASSWORD>"
-lxc_ssh_pubkey  = "<PUBKEY_PATH>"
+lxc_ssh_pubkey    = "<PUBKEY_PATH>"
 
 # VM Configuration (Template-based)
 vm_count         = 0                    # Number of VMs to create
